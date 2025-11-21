@@ -1,3 +1,5 @@
 input_*
 output_*
 venv*/
+.gradio/
+__pycache__/
