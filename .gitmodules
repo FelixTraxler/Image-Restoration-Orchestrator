@@ -1,9 +1,9 @@
 [submodule "X-Restormer"]
 	path = X-Restormer
-	url = git@github.com:FelixTraxler/image-restoration-orchestrator-xrestormer.git
+	url = git@github.com:FelixTraxler/image-restoration-xrestormer.git
 [submodule "DarkIR"]
 	path = DarkIR
-	url = git@github.com:FelixTraxler/image-restoration-orchestrator-DarkIR.git
+	url = git@github.com:FelixTraxler/image-restoration-DarkIR.git
 [submodule "vggt"]
 	path = vggt
 	url = git@github.com:FelixTraxler/vggt.git
