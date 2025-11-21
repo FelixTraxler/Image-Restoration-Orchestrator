@@ -4,3 +4,6 @@
 [submodule "DarkIR"]
 	path = DarkIR
 	url = git@github.com:FelixTraxler/image-restoration-orchestrator-DarkIR.git
+[submodule "vggt"]
+	path = vggt
+	url = git@github.com:FelixTraxler/vggt.git
