@@ -25,7 +25,7 @@ projects = [
 def resize_image(image, model):
     project = next((p for p in projects if p["model"] == model), None)
     if project is None:
-        return None, "Invalid model selection"
+        return (None, None), "Invalid model selection"
 
     resized_image = ImageOps.contain(image, (256,256))
     resized_image.save(f"input_128/temp.png")
@@ -37,18 +37,30 @@ def resize_image(image, model):
     )
 
     output_image = Image.open(f"output_images/temp_{model}.png")
+    return (resized_image, output_image), f"Used model: {model}"
 
-    return resized_image, output_image, f"Used model: {model}" 
+with gr.Blocks() as demo:
+    gr.Markdown("# Image Enhancement Model Comparison")
+    gr.Markdown("Upload an image and select a model to enhance it. Use the slider to compare the resized input with the enhanced output.")
 
-demo = gr.Interface(
-    fn=resize_image,
-    inputs=[gr.Image(type="pil", label="Input Image"), gr.Dropdown(choices=[project["model"] for project in projects], label="Model")],
-    outputs=[
-        gr.Image(type="pil", label="Resized Image"), 
-        gr.Image(type="pil", label="Output Image"),
-        gr.Text(label="Resized Image Size"), 
-    ],
-    api_name="predict"
-)
+    with gr.Row():
+        with gr.Column():
+            input_image = gr.Image(type="pil", label="Input Image")
+            model_dropdown = gr.Dropdown(
+                choices=[project["model"] for project in projects],
+                label="Model",
+                value=projects[0]["model"] if projects else None
+            )
+            submit_btn = gr.Button("Process Image", variant="primary")
+
+        with gr.Column():
+            image_slider = gr.ImageSlider(label="Resized Image vs Output Image")
+            model_info = gr.Text(label="Model Info")
+
+    submit_btn.click(
+        fn=resize_image,
+        inputs=[input_image, model_dropdown],
+        outputs=[image_slider, model_info]
+    )
 
 demo.launch(share=True)
