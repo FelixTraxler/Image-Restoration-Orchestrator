@@ -43,24 +43,45 @@ with gr.Blocks() as demo:
     gr.Markdown("# Image Enhancement Model Comparison")
     gr.Markdown("Upload an image and select a model to enhance it. Use the slider to compare the resized input with the enhanced output.")
 
-    with gr.Row():
-        with gr.Column():
-            input_image = gr.Image(type="pil", label="Input Image")
-            model_dropdown = gr.Dropdown(
-                choices=[project["model"] for project in projects],
-                label="Model",
-                value=projects[0]["model"] if projects else None
+    with gr.Tabs():
+        with gr.Tab("Image Enhancement"):
+            with gr.Row():
+                with gr.Column():
+                    input_image = gr.Image(type="pil", label="Input Image")
+                    model_dropdown = gr.Dropdown(
+                        choices=[project["model"] for project in projects],
+                        label="Model",
+                        value=projects[0]["model"] if projects else None
+                    )
+                    submit_btn = gr.Button("Process Image", variant="primary")
+
+                with gr.Column():
+                    image_slider = gr.ImageSlider(label="Resized Image vs Output Image")
+                    model_info = gr.Text(label="Model Info")
+
+            submit_btn.click(
+                fn=resize_image,
+                inputs=[input_image, model_dropdown],
+                outputs=[image_slider, model_info]
             )
-            submit_btn = gr.Button("Process Image", variant="primary")
+        
+        with gr.Tab("Test"):
+            with gr.Row():
+                with gr.Column():
+                    test_dropdown = gr.Dropdown(
+                        choices=["Test1", "Test2", "Test3"],
+                        label="Test",
+                        value="Test1"
+                    )
+                    submit_btn = gr.Button("Process Test", variant="primary")
 
-        with gr.Column():
-            image_slider = gr.ImageSlider(label="Resized Image vs Output Image")
-            model_info = gr.Text(label="Model Info")
+                with gr.Column():
+                    test_info = gr.Text(label="Test Info")
 
-    submit_btn.click(
-        fn=resize_image,
-        inputs=[input_image, model_dropdown],
-        outputs=[image_slider, model_info]
-    )
+            submit_btn.click(
+                fn=(lambda x: x),
+                inputs=[test_dropdown],
+                outputs=[test_info]
+            )
 
 demo.launch(share=True)
