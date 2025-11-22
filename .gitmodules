@@ -7,3 +7,6 @@
 [submodule "vggt"]
 	path = vggt
 	url = git@github.com:FelixTraxler/vggt.git
+[submodule "DeOldify"]
+	path = DeOldify
+	url = https://github.com/FelixTraxler/image-restoration-DeOldify

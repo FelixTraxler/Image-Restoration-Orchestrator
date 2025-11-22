@@ -5,6 +5,13 @@ import gradio as gr
 from constants import BASE_DIR
 
 projects = [
+    {
+        "venv": BASE_DIR / "DeOldify/venv_DeOldify/bin/python",
+        "script": BASE_DIR / "DeOldify/run.py",
+        "args": [],
+        "cwd": BASE_DIR / "DeOldify",
+        "model": "DeOldify",
+    },
 ]
 
 def resize_image(image, model):
@@ -12,7 +19,7 @@ def resize_image(image, model):
     if project is None:
         return (None, None), "Invalid model selection"
 
-    resized_image = ImageOps.contain(image, (256,256))
+    resized_image = ImageOps.contain(image, (1920,1920))
     resized_image.save(f"input_128/temp.png")
 
     subprocess.run(
