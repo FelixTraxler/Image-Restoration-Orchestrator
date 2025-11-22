@@ -3,6 +3,8 @@ from PIL import ImageOps, Image
 from pathlib import Path
 import subprocess
 
+from components import vggt_page
+
 BASE_DIR = Path(__file__).resolve().parent
 
 projects = [
@@ -65,23 +67,7 @@ with gr.Blocks() as demo:
                 outputs=[image_slider, model_info]
             )
         
-        with gr.Tab("Test"):
-            with gr.Row():
-                with gr.Column():
-                    test_dropdown = gr.Dropdown(
-                        choices=["Test1", "Test2", "Test3"],
-                        label="Test",
-                        value="Test1"
-                    )
-                    submit_btn = gr.Button("Process Test", variant="primary")
-
-                with gr.Column():
-                    test_info = gr.Text(label="Test Info")
-
-            submit_btn.click(
-                fn=(lambda x: x),
-                inputs=[test_dropdown],
-                outputs=[test_info]
-            )
+        with gr.Tab("3D Reconstruction"):
+            vggt_page.vggt_page()
 
 demo.launch(share=True)
