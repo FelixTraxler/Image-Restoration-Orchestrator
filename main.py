@@ -1,7 +1,4 @@
 import gradio as gr
-from PIL import ImageOps, Image
-from pathlib import Path
-import subprocess
 
 from components import vggt_page
 from components import super_resolution
@@ -15,14 +12,14 @@ with gr.Blocks() as demo:
     with gr.Tabs():
         with gr.Tab("Super Resolution"):
            super_resolution.super_resolution()
-        
+
         with gr.Tab("Dark IR"):
            dark_ir.dark_ir()
 
         with gr.Tab("B/W to Color"):
            bw_to_color.bw_to_color()
-        
+
         with gr.Tab("3D Reconstruction"):
             vggt_page.vggt_page()
 
-demo.launch(share=True)
+demo.queue(max_size=20).launch(show_error=True, share=True, max_threads=1)
